@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_birth = models.DateTimeField(blank=True, null=True)
     #user_projects = models.ManyToManyField('Project')
     is_staff = models.BooleanField(default=False)
-
+    is_active = models.BooleanField(default=True) #se ocupa para el admin
     objects = UserManager() #use default usermanager
 
     USERNAME_FIELD = 'email'
