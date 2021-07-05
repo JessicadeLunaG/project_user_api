@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
-import uuid
-import os
+
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
@@ -28,6 +27,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=10)
@@ -47,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Project(models.Model):
     """Ingredient to be used in a recipe"""
+    id = models.AutoField(primary_key=True)
     project_name = models.CharField(max_length=255)
     schedule = models.CharField(max_length=11)#check with tags
     project_description = models.CharField(max_length=255)
