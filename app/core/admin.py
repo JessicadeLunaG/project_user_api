@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
-from core import models
+#from core import models
+from .models import User, Project
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -19,4 +20,5 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2')
         }),
     )
-admin.site.register(models.User, UserAdmin)
+admin.site.register(User, UserAdmin)
+admin.site.register(Project)
