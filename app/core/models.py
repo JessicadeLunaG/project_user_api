@@ -1,4 +1,8 @@
 from django.db import models
+from django.conf import settings
+import uuid
+import os
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
 class UserManager(BaseUserManager):
@@ -41,3 +45,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Return string representation of user"""
         return self.email
 
+class Project(models.Model):
+    """Ingredient to be used in a recipe"""
+    project_name = models.CharField(max_length=255)
+    schedule = models.CharField(max_length=11)#check with tags
+    project_description = models.CharField(max_length=255)
+    creation_date = models.DateTimeField(null=True, blank=True)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    project_type = models.CharField(max_length=50) #check for tags
+    project_status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.project_name

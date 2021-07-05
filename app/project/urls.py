@@ -18,8 +18,8 @@ app_name = 'project'
 urlpatterns = [
     
     #url(r'^api/tutorials/(?P<pk>[0-9]+)$', views.project_detail),
-    url('api/tutorials/published', views.Project_list_published),
-    #url('api/tutorials/', views.project_list),
+    #url('api/tutorials/published', views.Project_list_published),
+    url('projectlist/', views.project_list),
     url('aver/', include(router.urls)),
 ]
 
