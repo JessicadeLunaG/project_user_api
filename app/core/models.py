@@ -34,16 +34,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     adress = models.CharField(max_length=255)
     user_description = models.CharField(max_length=255)
     date_birth = models.DateTimeField(blank=True, null=True)
-    #user_projects = models.ManyToManyField('Project')
+    user_projects = models.ManyToManyField('Project')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True) #se ocupa para el admin
     objects = UserManager() #use default usermanager
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'id'
 
     def __str__(self):
         """Return string representation of user"""
-        return self.email
+        return self.name
 
 class Project(models.Model):
     """Ingredient to be used in a recipe"""
@@ -52,12 +52,15 @@ class Project(models.Model):
     schedule = models.CharField(max_length=11)#check with tags
     project_description = models.CharField(max_length=255)
     creation_date = models.DateTimeField(null=True, blank=True)
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
     project_type = models.CharField(max_length=50) #check for tags
     project_status = models.BooleanField(default=True)
-
+    """ author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )  """
+    users = models.ManyToManyField(User)
     def __str__(self):
         return self.project_name
+
+
+

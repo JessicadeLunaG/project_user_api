@@ -1,4 +1,5 @@
 from rest_framework import viewsets,  mixins
+from django.shortcuts import render
 from rest_framework.response import Response
 from core.models import Project
 from project import serializers
@@ -11,12 +12,12 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
 from rest_framework.decorators import api_view
-
+from django.views.decorators.csrf import csrf_protect
 
 class CreateProjectViewSet(viewsets.ViewSet):
 
-    queryset = Project.objects.all()
     serializer_class = serializers.ProjectSerializer
+    queryset = Project.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -39,11 +40,12 @@ class CreateProjectViewSet(viewsets.ViewSet):
 
         return Response(serializer.data)
 
+
 @api_view(['GET', 'POST', 'DELETE'])
+@csrf_protect
 def project_list(request):
     if request.method == 'GET':
         projects = Project.objects.all()
-        
         id = request.query_params.get('id', None)
         
         if id is not None:
@@ -92,7 +94,7 @@ def project_detail(request, pk):
         
 @api_view(['GET'])
 def Project_list_published(request):
-    Projects = Project.objects.filter(published=True)
+    Projects = Project.objects.filter(project_status=True)
         
     if request.method == 'GET': 
         Projects_serializer = serializers.ProjectSerializer(Projects, many=True)

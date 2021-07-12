@@ -19,7 +19,6 @@ urlpatterns = [
     
     #url(r'^api/tutorials/(?P<pk>[0-9]+)$', views.project_detail),
     #url('api/tutorials/published', views.Project_list_published),
-    url('projectlist/', views.project_list),
+    url('projectlist/', views.project_detail),
     url('aver/', include(router.urls)),
 ]
-
